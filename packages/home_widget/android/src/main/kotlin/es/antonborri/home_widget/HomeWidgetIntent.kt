@@ -15,9 +15,9 @@ object HomeWidgetLaunchIntent {
   const val HOME_WIDGET_LAUNCH_ACTION = "es.antonborri.home_widget.action.LAUNCH"
 
   fun <T> getActivity(
-      context: Context,
-      activityClass: Class<T>,
-      uri: Uri? = null
+    context: Context,
+    activityClass: Class<T>,
+    uri: Uri? = null
   ): PendingIntent where T : Activity {
     val intent = Intent(context, activityClass)
     intent.data = uri
@@ -32,11 +32,15 @@ object HomeWidgetLaunchIntent {
       return PendingIntent.getActivity(context, 0, intent, flags)
     }
 
-    val options = ActivityOptions.makeBasic()
-    options.pendingIntentBackgroundActivityStartMode =
+    if (Build.VERSION.SDK_INT <= 35) {
+      val options = ActivityOptions.makeBasic()
+      options.pendingIntentBackgroundActivityStartMode =
         ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
-
-    return PendingIntent.getActivity(context, 0, intent, flags, options.toBundle())
+      return PendingIntent.getActivity(context, 0, intent, flags, options.toBundle())
+    } else {
+      // Android Version 35 以上の場合、optionsを使用せずにPendingIntentを作成
+      return PendingIntent.getActivity(context, 0, intent, flags)
+    }
   }
 }
 
