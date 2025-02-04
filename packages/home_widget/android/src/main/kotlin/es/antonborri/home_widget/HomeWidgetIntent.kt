@@ -32,7 +32,7 @@ object HomeWidgetLaunchIntent {
       return PendingIntent.getActivity(context, 0, intent, flags)
     }
 
-    if (Build.VERSION.SDK_INT <= 35) {
+    if (Build.VERSION.SDK_INT < 35) {
       val options = ActivityOptions.makeBasic()
       options.pendingIntentBackgroundActivityStartMode =
         ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
