@@ -34,6 +34,7 @@ object HomeWidgetLaunchIntent {
 
     val options = ActivityOptions.makeBasic()
 
+    // Add this condition to ensure it's only executed on Android versions less than 15
     if (Build.VERSION.SDK_INT < 35) {
       options.pendingIntentBackgroundActivityStartMode =
         ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
