@@ -24,13 +24,6 @@ object HomeWidgetLaunchIntent {
     intent.action = HOME_WIDGET_LAUNCH_ACTION
 
     var flags = PendingIntent.FLAG_UPDATE_CURRENT
-    if (Build.VERSION.SDK_INT >= 23) {
-      flags = flags or PendingIntent.FLAG_IMMUTABLE
-    }
-
-    if (Build.VERSION.SDK_INT < 34) {
-      return PendingIntent.getActivity(context, 0, intent, flags)
-    }
 
     if (Build.VERSION.SDK_INT < 35) {
       val options = ActivityOptions.makeBasic()
