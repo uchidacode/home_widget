@@ -28,17 +28,18 @@ object HomeWidgetLaunchIntent {
       flags = flags or PendingIntent.FLAG_IMMUTABLE
     }
 
-    return if (Build.VERSION.SDK_INT < 34) {
-      PendingIntent.getActivity(context, 0, intent, flags)
-    } else if (Build.VERSION.SDK_INT in 34..34) {
-      val options = ActivityOptions.makeBasic()
+    if (Build.VERSION.SDK_INT < 34) {
+      return PendingIntent.getActivity(context, 0, intent, flags)
+    }
+
+    val options = ActivityOptions.makeBasic()
+
+    if (Build.VERSION.SDK_INT < 35) {
       options.pendingIntentBackgroundActivityStartMode =
         ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
-      PendingIntent.getActivity(context, 0, intent, flags, options.toBundle())
-    } else {
-      // Android Version 35 以上の場合、optionsを使用せずにPendingIntentを作成
-      PendingIntent.getActivity(context, 0, intent, flags)
     }
+
+    return PendingIntent.getActivity(context, 0, intent, flags, options.toBundle())
   }
 }
 
